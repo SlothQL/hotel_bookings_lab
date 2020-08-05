@@ -28,13 +28,15 @@ export default {
         },
 
         changeCheckedIn(e) {
+            e.preventDefault();
             const updated = {
                 checkedIn: !this.booking.checkedIn
             }
             BookingService.putBooking(this.booking._id, updated)
-                .then( res => eventBus.$emit('updated-booking', res, this.booking._id));
+             .then( res => eventBus.$emit('updated-booking', res));
         }
     }
+    
 }
 </script>
 

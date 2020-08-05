@@ -21,7 +21,6 @@ export default {
         })
     },
     putBooking(id, payload) {
-        console.log(JSON.stringify(payload))
         return fetch(baseURL + id, {
             method: 'PUT',
             body: JSON.stringify(payload),

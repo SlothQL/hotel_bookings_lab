@@ -31,9 +31,10 @@ export default {
       this.bookings.push(booking);
     });
 
-    eventBus.$on('updated-booking', (id, booking) => {
-      const index = this.bookings.findIndex(booking => booking._id === id);
-      this.bookings[index] = booking;
+    eventBus.$on('updated-booking', (updated_booking) => {
+      console.log(updated_booking);
+      const index = this.bookings.findIndex(booking => booking._id === updated_booking._id);
+      this.bookings[index].checkedIn = updated_booking.checkedIn;
     })
   },
   components: {
