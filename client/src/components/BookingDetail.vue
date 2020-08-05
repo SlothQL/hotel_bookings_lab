@@ -7,8 +7,11 @@
       <div v-if="booking.checkedIn === false" class="detail-item not-checked-in">Not checked in</div>
         <div v-if="booking.checkedIn === true" class="detail-item checked-in">Checked in</div>
         <button v-on:click="handleDelete" class="detail-item btn">Delete Booking</button>
-        <button v-on:click="changeCheckedIn" v-if="booking.checkedIn" class="detail-item check-out">Check Out</button>
-        <button v-on:click="changeCheckedIn" v-if="!booking.checkedIn" class="detail-item check-in">Check In</button>
+        
+        <form v-on:submit="changeCheckedIn" method="put">
+        <input type="submit" v-if="booking.checkedIn" class="detail-item check-out" value="Check out" />
+        <input type="submit" v-if="!booking.checkedIn" class="detail-item check-in" value="Check in" />
+        </form>
   </div>
 </template>
 
@@ -24,12 +27,12 @@ export default {
             .then(() => eventBus.$emit('booking-deleted', this.booking._id))
         },
 
-        changeCheckedIn() {
-            if (this.booking.checkedIn === true) {
-                this.booking.checkedIn = false
-            } else {
-                this.booking.checkedIn = true
+        changeCheckedIn(e) {
+            const updated = {
+                checkedIn: !this.booking.checkedIn
             }
+            BookingService.putBooking(this.booking._id, updated)
+                .then( res => eventBus.$emit('updated-booking', res, this.booking._id));
         }
     }
 }

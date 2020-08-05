@@ -30,6 +30,11 @@ export default {
     eventBus.$on('new-booking', (booking) => {
       this.bookings.push(booking);
     });
+
+    eventBus.$on('updated-booking', (id, booking) => {
+      const index = this.bookings.findIndex(booking => booking._id === id);
+      this.bookings[index] = booking;
+    })
   },
   components: {
     'booking-form': BookingForm,
